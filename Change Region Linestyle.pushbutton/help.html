@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Change Region Linestyle - Help</title>
+<style>
+    :root {
+        --bg: #f5f7fa;
+        --card: #ffffff;
+        --text: #20242a;
+        --muted: #606975;
+        --accent: #2563a6;
+        --border: #d8dee7;
+        --good: #18794e;
+        --note: #eef5fc;
+        --code: #f1f3f5;
+    }
+    * { box-sizing: border-box; }
+    body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Segoe UI", Arial, sans-serif;
+        line-height: 1.55;
+    }
+    .page {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 32px 22px 48px;
+    }
+    header {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 28px 30px;
+        margin-bottom: 20px;
+    }
+    h1 { margin: 0 0 6px; font-size: 30px; }
+    h2 {
+        margin: 30px 0 12px;
+        padding-bottom: 7px;
+        border-bottom: 1px solid var(--border);
+        font-size: 21px;
+    }
+    h3 { margin: 20px 0 8px; font-size: 17px; }
+    p { margin: 8px 0 12px; }
+    .subtitle { color: var(--muted); font-size: 16px; }
+    .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 22px 26px;
+        margin: 16px 0;
+    }
+    .note {
+        background: var(--note);
+        border-left: 4px solid var(--accent);
+        padding: 13px 16px;
+        margin: 16px 0;
+    }
+    .success {
+        border-left-color: var(--good);
+        background: #eef8f3;
+    }
+    ol, ul { padding-left: 25px; }
+    li { margin: 6px 0; }
+    code {
+        background: var(--code);
+        border-radius: 4px;
+        padding: 2px 5px;
+        font-family: Consolas, "Courier New", monospace;
+    }
+    .flow {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr auto 1fr;
+        align-items: center;
+        gap: 10px;
+        margin: 20px 0;
+    }
+    .flow div {
+        text-align: center;
+        padding: 13px 8px;
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        background: #fff;
+        font-weight: 600;
+    }
+    .flow .arrow {
+        border: 0;
+        background: transparent;
+        font-size: 22px;
+        padding: 0;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 12px 0;
+    }
+    th, td {
+        border: 1px solid var(--border);
+        padding: 9px 11px;
+        text-align: left;
+        vertical-align: top;
+    }
+    th { background: #f0f3f7; }
+    footer {
+        color: var(--muted);
+        text-align: center;
+        margin-top: 30px;
+        font-size: 13px;
+    }
+    @media (max-width: 650px) {
+        .flow { grid-template-columns: 1fr; }
+        .flow .arrow { transform: rotate(90deg); }
+        header, .card { padding: 20px; }
+    }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header>
+    <h1>Change Region Linestyle</h1>
+    <div class="subtitle">PyPiPie &mdash; Filled Region and Masking Region boundary utility</div>
+    <p>Changes all boundary lines of selected <strong>Filled Regions</strong> and
+    <strong>Masking Regions</strong> to a user-selected Revit line style.</p>
+</header>
+
+<div class="card">
+    <h2 style="margin-top:0">What This Tool Does</h2>
+    <p>The tool changes the boundary line style of one or more selected regions.
+    Both Filled Regions and Masking Regions are supported and use the same operation.</p>
+
+    <div class="flow">
+        <div>Select Regions</div>
+        <div class="arrow">&rarr;</div>
+        <div>Select Line Style</div>
+        <div class="arrow">&rarr;</div>
+        <div>Update Boundaries</div>
+    </div>
+
+    <div class="note success">
+        <strong>Regions are modified in place.</strong> The tool does not delete or recreate
+        the region, so the existing region element remains in the model.
+    </div>
+</div>
+
+<div class="card">
+    <h2 style="margin-top:0">How to Use</h2>
+    <ol>
+        <li>Select one or more Filled Regions and/or Masking Regions in Revit.</li>
+        <li>Run <strong>Change Region Linestyle</strong>.</li>
+        <li>Select the desired line style from the list.</li>
+        <li>Click <strong>Change Linestyle</strong>.</li>
+        <li>Review the pyRevit output report for changed or failed regions.</li>
+    </ol>
+
+    <p>If no valid region is preselected, the tool prompts you to select regions in the active view.</p>
+</div>
+
+<div class="card">
+    <h2 style="margin-top:0">Filled and Masking Regions</h2>
+
+    <table>
+        <tr>
+            <th>Region</th>
+            <th>Supported</th>
+            <th>Behavior</th>
+        </tr>
+        <tr>
+            <td>Filled Region</td>
+            <td>Yes</td>
+            <td>All region boundary lines are changed to the selected line style.</td>
+        </tr>
+        <tr>
+            <td>Masking Region</td>
+            <td>Yes</td>
+            <td>All region boundary lines are changed using the same Revit region API.</td>
+        </tr>
+        <tr>
+            <td>Mixed selection</td>
+            <td>Yes</td>
+            <td>Filled and Masking Regions can be processed together.</td>
+        </tr>
+    </table>
+</div>
+
+<div class="card">
+    <h2 style="margin-top:0">Line Style Selection</h2>
+    <p>The list contains line styles that Revit identifies as valid for region boundaries.
+    When multiple regions are selected, the tool uses line styles valid for the entire selection.</p>
+
+    <div class="note">
+        The selected style is applied to the <strong>entire boundary</strong>. Existing mixed
+        boundary styles are replaced by the selected style.
+    </div>
+
+    <h3>Example</h3>
+    <p>A region whose four edges use different styles:</p>
+    <p><code>Thin Lines</code> &nbsp; <code>Hidden</code> &nbsp;
+       <code>Invisible Lines</code> &nbsp; <code>Centerline</code></p>
+    <p>After selecting <code>09_Hidden_Red_Air Barrier</code>, all four edges use:</p>
+    <p><code>09_Hidden_Red_Air Barrier</code></p>
+</div>
+
+<div class="card">
+    <h2 style="margin-top:0">Selection Behavior</h2>
+    <ul>
+        <li>If regions are already selected, the tool uses the preselection immediately.</li>
+        <li>Non-region elements in the preselection are ignored.</li>
+        <li>If no regions are preselected, Revit prompts for Filled or Masking Regions.</li>
+        <li>Multiple regions can be processed in one operation.</li>
+        <li>Canceling the selection or line-style dialog makes no model changes.</li>
+    </ul>
+</div>
+
+<div class="card">
+    <h2 style="margin-top:0">What Is Preserved</h2>
+    <p>Because the region itself is changed rather than rebuilt, the tool does not intentionally
+    alter the region's geometry or other instance information.</p>
+    <ul>
+        <li>Region ElementId</li>
+        <li>Boundary geometry</li>
+        <li>Holes and islands</li>
+        <li>Filled Region type and fill pattern</li>
+        <li>Instance parameters</li>
+        <li>Extensible Storage attached to the existing element</li>
+        <li>Location and view association</li>
+    </ul>
+</div>
+
+<div class="card">
+    <h2 style="margin-top:0">Error Handling</h2>
+    <p>Each region is processed independently inside the overall Revit transaction. If one region
+    cannot be changed, that region is rolled back without intentionally undoing successful changes
+    to other selected regions.</p>
+
+    <p>The final pyRevit report includes:</p>
+    <ul>
+        <li>Total selected regions</li>
+        <li>Number successfully changed</li>
+        <li>Number that failed</li>
+        <li>Clickable ElementIds for changed regions</li>
+        <li>Error reason for any failed region</li>
+    </ul>
+</div>
+
+<div class="card">
+    <h2 style="margin-top:0">Revit API Method</h2>
+    <p>The tool uses Revit's purpose-built FilledRegion boundary line-style methods rather than
+    manipulating the region's underlying sketch curves:</p>
+
+    <p><code>GetValidLineStyleIdsForFilledRegion(doc)</code></p>
+    <p><code>SetLineStyleId(selected_style.Id)</code></p>
+
+    <p>These methods work for both Filled Regions and Masking Regions.</p>
+</div>
+
+<div class="card">
+    <h2 style="margin-top:0">Notes</h2>
+    <ul>
+        <li>The command changes every boundary segment of each selected region to one line style.</li>
+        <li>It is not intended for changing only individual edges of a region.</li>
+        <li>The available line-style list is controlled by the styles Revit permits for region boundaries.</li>
+        <li>The region is not exploded, recreated, or converted.</li>
+    </ul>
+</div>
+
+<footer>
+    PyPiPie &bull; Change Region Linestyle &bull; Aaron Rumple
+</footer>
+
+</div>
+</body>
+</html>
