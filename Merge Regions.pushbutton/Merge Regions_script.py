@@ -515,7 +515,7 @@ class MergeDialog(Window):
 
         self.Title = "Merge Regions"
         self.Width = 540
-        self.Height = 500
+        self.Height = 470
         self.MinWidth = self.Width
         self.MaxWidth = self.Width
         self.MinHeight = self.Height
@@ -525,9 +525,8 @@ class MergeDialog(Window):
         self.ResizeMode = ResizeMode.NoResize
 
         root = Grid(); root.Margin = Thickness(16)
-        for h in [34, 78, 84, 96, 44]:
+        for h in [34, 78, 76, 72, 72, 50]:
             rd = RowDefinition(); rd.Height = GridLength(h); root.RowDefinitions.Add(rd)
-        rd = RowDefinition(); rd.Height = GridLength(1, GridUnitType.Star); root.RowDefinitions.Add(rd)
         self.Content = root
 
         summary = TextBlock()
@@ -556,13 +555,15 @@ class MergeDialog(Window):
         sp2.Children.Add(self.keep)
 
         gb3 = GroupBox(); gb3.Header = "Boundary line styles"; Grid.SetRow(gb3, 3); root.Children.Add(gb3)
-        g3 = Grid(); g3.Margin = Thickness(8)
-        for _ in range(2): g3.ColumnDefinitions.Add(ColumnDefinition())
+        g3 = Grid(); g3.Margin = Thickness(8,6,8,6)
+        c0 = ColumnDefinition(); c0.Width = GridLength(230)
+        c1 = ColumnDefinition(); c1.Width = GridLength(1, GridUnitType.Star)
+        g3.ColumnDefinitions.Add(c0); g3.ColumnDefinitions.Add(c1)
         gb3.Content = g3
         self.replace = CheckBox(); self.replace.Content = "Replace all boundary line styles"
         self.replace.IsChecked = False; self.replace.Checked += self.style_toggle; self.replace.Unchecked += self.style_toggle
         Grid.SetColumn(self.replace, 0); g3.Children.Add(self.replace)
-        self.lstyle = ComboBox(); self.lstyle.IsEnabled = False
+        self.lstyle = ComboBox(); self.lstyle.IsEnabled = False; self.lstyle.Height = 26; self.lstyle.VerticalAlignment = VerticalAlignment.Center
         for s in self.line_styles:
             item = ComboBoxItem(); item.Content = getattr(s, 'Name', str(s.Id.IntegerValue)); item.Tag = s
             self.lstyle.Items.Add(item)
@@ -573,9 +574,9 @@ class MergeDialog(Window):
         note.Text = ("Keep line styles preserves surviving source-edge styles where Revit exposes them. "
                      "Edges created by the union use Revit's resulting/default boundary style. "
                      "Replace applies one selected style to every resulting boundary.")
-        note.Margin = Thickness(2,6,2,2); Grid.SetRow(note, 4); root.Children.Add(note)
+        note.Margin = Thickness(2,6,2,2); note.VerticalAlignment = VerticalAlignment.Top; Grid.SetRow(note, 4); root.Children.Add(note)
 
-        buttons = StackPanel(); buttons.Orientation = Orientation.Horizontal; buttons.HorizontalAlignment = HorizontalAlignment.Right
+        buttons = StackPanel(); buttons.Orientation = Orientation.Horizontal; buttons.HorizontalAlignment = HorizontalAlignment.Right; buttons.VerticalAlignment = VerticalAlignment.Center
         ok = Button(); ok.Content = "Merge"; ok.Width = 90; ok.Height = 28; ok.Margin = Thickness(6); ok.IsDefault = True; ok.Click += self.ok
         cancel = Button(); cancel.Content = "Cancel"; cancel.Width = 90; cancel.Height = 28; cancel.Margin = Thickness(6); cancel.IsCancel = True
         buttons.Children.Add(ok); buttons.Children.Add(cancel); Grid.SetRow(buttons, 5); root.Children.Add(buttons)
