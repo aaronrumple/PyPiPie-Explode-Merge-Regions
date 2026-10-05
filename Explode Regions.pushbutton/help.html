@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Explode Regions - PyPiPie Help</title>
+<style>
+:root{color-scheme:light dark;--blue:#2878b8;--blue2:#155b91;--panel:#f5f7f9;--border:#c9d1d9;--text:#202428;--muted:#66717c;--fill:#76b7e5;--hole:#fff;--good:#e8f5ea}
+@media(prefers-color-scheme:dark){:root{--panel:#24282d;--border:#4b535c;--text:#edf1f5;--muted:#aeb7c0;--hole:#24282d;--good:#1f3826}}
+*{box-sizing:border-box} body{font-family:"Segoe UI",Arial,sans-serif;max-width:1000px;margin:0 auto;padding:34px 28px 60px;color:var(--text);line-height:1.55} h1{font-size:32px;margin:0;color:var(--blue)} .subtitle{margin:3px 0 24px;color:var(--muted);font-size:15px} h2{font-size:21px;margin:30px 0 12px;padding-bottom:6px;border-bottom:2px solid var(--blue)} h3{font-size:17px;margin:0 0 8px;color:var(--blue2)} p{margin:8px 0 12px}.callout{background:var(--panel);border:1px solid var(--border);border-left:5px solid var(--blue);border-radius:5px;padding:12px 15px;margin:16px 0}.steps{counter-reset:step;padding:0;list-style:none}.steps li{counter-increment:step;position:relative;padding:4px 0 12px 42px}.steps li:before{content:counter(step);position:absolute;left:0;top:1px;width:27px;height:27px;border-radius:50%;background:var(--blue);color:white;text-align:center;line-height:27px;font-weight:700}.example{border:1px solid var(--border);border-radius:8px;margin:16px 0 22px;overflow:hidden}.example-head{background:var(--panel);padding:10px 14px;font-weight:700}.example-body{padding:14px}.graphic{width:100%;height:auto;display:block;max-width:820px;margin:4px auto 10px}.label{font:600 15px "Segoe UI",Arial,sans-serif;fill:currentColor}.smalllabel{font:13px "Segoe UI",Arial,sans-serif;fill:currentColor}.region{fill:#79b9e5;stroke:#246c9f;stroke-width:3}.region2{fill:#a7d58d;stroke:#4e8b3d;stroke-width:3}.hole{fill:var(--hole);stroke:#555;stroke-width:3}.arrow{stroke:#777;stroke-width:2.5;fill:none;marker-end:url(#arrow)} table{border-collapse:collapse;width:100%;margin:12px 0 20px}th,td{border:1px solid var(--border);padding:9px 11px;text-align:left;vertical-align:top}th{background:var(--panel)}ul{padding-left:23px}.footer{margin-top:34px;padding-top:12px;border-top:1px solid var(--border);color:var(--muted);font-size:13px}.legend{display:flex;gap:18px;flex-wrap:wrap;margin:8px 0 0;font-size:13px}.swatch{display:inline-block;width:16px;height:12px;margin-right:5px;vertical-align:-1px;border:2px solid #555}.filled{background:#79b9e5;border-color:#246c9f}.empty{background:var(--hole)}
+</style>
+</head>
+<body>
+<h1>Explode Regions</h1>
+<p class="subtitle">PyPiPie &mdash; Filled Regions / Masking Regions</p>
+
+<h2>Purpose</h2>
+<p><strong>Explode Regions</strong> separates a Filled Region or Masking Region containing multiple disconnected solid areas into individual Revit region elements while preserving holes and nested islands.</p>
+<p>The command determines the nesting relationship of every closed loop. It does not depend on the order in which Revit returns region boundaries.</p>
+<div class="callout"><strong>Type preservation:</strong> Filled Regions retain the original <code>FilledRegionType</code>. Masking Regions remain Masking Regions. The tool also attempts to restore the original boundary line styles.</div>
+
+<h2>How to Use</h2>
+<ol class="steps">
+<li>Select one or more <strong>Filled Regions</strong> and/or <strong>Masking Regions</strong>. Regions may be preselected before starting the command.</li>
+<li>Run <strong>Explode Regions</strong>.</li>
+<li>Choose <strong>Keep original regions</strong> or <strong>Delete original regions</strong>.</li>
+<li>Click <strong>OK</strong>.</li>
+<li>Each independent solid island is created as its own Revit region. Holes belonging to that island remain holes.</li>
+</ol>
+
+<h2>Graphic Examples</h2>
+<div class="legend"><span><i class="swatch filled"></i>Region material</span><span><i class="swatch empty"></i>Hole / empty area</span></div>
+
+<div class="example"><div class="example-head">Example 1 &mdash; Two Disconnected Areas</div><div class="example-body">
+<svg class="graphic" viewBox="0 0 820 220" role="img" aria-label="Two disconnected areas explode into two regions"><defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#777"/></marker></defs>
+<text x="90" y="28" class="label">SOURCE: one region element</text><rect x="55" y="55" width="125" height="100" rx="3" class="region"/><rect x="215" y="55" width="125" height="100" rx="3" class="region"/><text x="105" y="110" class="label">A</text><text x="265" y="110" class="label">B</text><path d="M365 105 L465 105" class="arrow"/><text x="540" y="28" class="label">RESULT: two regions</text><rect x="505" y="55" width="125" height="100" rx="3" class="region"/><rect x="665" y="55" width="125" height="100" rx="3" class="region2"/><text x="540" y="110" class="smalllabel">Region 1</text><text x="700" y="110" class="smalllabel">Region 2</text>
+</svg><p>Disconnected solid areas become separate Revit region elements.</p></div></div>
+
+<div class="example"><div class="example-head">Example 2 &mdash; Region with a Hole</div><div class="example-body">
+<svg class="graphic" viewBox="0 0 820 230" role="img" aria-label="Region with a hole remains one region"><defs><marker id="arrow2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#777"/></marker></defs>
+<text x="105" y="28" class="label">SOURCE</text><path d="M55 50H340V190H55Z M135 90H260V150H135Z" fill-rule="evenodd" class="region"/><text x="165" y="125" class="smalllabel">HOLE</text><path d="M365 120 L465 120" style="stroke:#777;stroke-width:2.5;fill:none;marker-end:url(#arrow2)"/><text x="575" y="28" class="label">RESULT</text><path d="M500 50H785V190H500Z M580 90H705V150H580Z" fill-rule="evenodd" class="region"/><text x="606" y="125" class="smalllabel">HOLE</text>
+</svg><p>The enclosed empty area remains a hole. It is <strong>not</strong> created as a separate region.</p></div></div>
+
+<div class="example"><div class="example-head">Example 3 &mdash; Hole with an Island</div><div class="example-body">
+<svg class="graphic" viewBox="0 0 820 255" role="img" aria-label="Nested island becomes a separate region"><defs><marker id="arrow3" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#777"/></marker></defs>
+<text x="110" y="28" class="label">SOURCE</text><path d="M45 48H345V210H45Z M105 82H285V177H105Z" fill-rule="evenodd" class="region"/><rect x="155" y="112" width="80" height="38" class="region"/><text x="170" y="137" class="smalllabel">ISLAND</text><path d="M370 130 L455 130" style="stroke:#777;stroke-width:2.5;fill:none;marker-end:url(#arrow3)"/><text x="575" y="28" class="label">RESULT</text><path d="M485 48H795V210H485Z M545 82H735V177H545Z" fill-rule="evenodd" class="region"/><rect x="600" y="112" width="80" height="38" class="region2"/><text x="505" y="232" class="smalllabel">Region 1 = outer area + hole</text><text x="635" y="137" class="smalllabel">Region 2</text>
+</svg><p>The outer solid and its hole form Region 1. The filled island inside the hole becomes Region 2.</p></div></div>
+
+<div class="example"><div class="example-head">Example 4 &mdash; Hole &gt; Island &gt; Hole</div><div class="example-body">
+<svg class="graphic" viewBox="0 0 820 280" role="img" aria-label="Nested hole inside an island remains with the island"><defs><marker id="arrow4" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#777"/></marker></defs>
+<text x="110" y="28" class="label">SOURCE</text><path d="M40 48H350V225H40Z M90 78H300V195H90Z" fill-rule="evenodd" class="region"/><path d="M135 108H255V166H135Z M170 123H220V151H170Z" fill-rule="evenodd" class="region"/><path d="M372 135 L452 135" style="stroke:#777;stroke-width:2.5;fill:none;marker-end:url(#arrow4)"/><text x="575" y="28" class="label">RESULT</text><path d="M480 48H800V225H480Z M530 78H750V195H530Z" fill-rule="evenodd" class="region"/><path d="M575 108H705V166H575Z M610 123H670V151H610Z" fill-rule="evenodd" class="region2"/><text x="505" y="248" class="smalllabel">Region 1 = outer + first hole</text><text x="590" y="273" class="smalllabel">Region 2 = island + nested hole</text>
+</svg><p>A hole inside a nested island remains attached to that island when the new region is created.</p></div></div>
+
+<h2>How Nesting Is Interpreted</h2>
+<table><tr><th>Nesting depth</th><th>Meaning</th><th>Explode result</th></tr><tr><td>0</td><td>Outer solid</td><td>New region</td></tr><tr><td>1</td><td>Hole</td><td>Hole in depth 0 region</td></tr><tr><td>2</td><td>Island</td><td>New region</td></tr><tr><td>3</td><td>Hole in island</td><td>Hole in depth 2 region</td></tr><tr><td>4</td><td>Nested island</td><td>New region</td></tr></table>
+<div class="callout"><strong>Rule:</strong> Every even nesting depth is solid material and becomes a region. Its immediate odd-depth children are retained as holes.</div>
+
+<h2>Boundary Line Styles</h2>
+<p>The command attempts to preserve the original boundary line styles, including regions whose loops use different styles. Style data is read from the source region's dependent Revit sketch curves and matched to the corresponding new boundaries.</p>
+<p>Revit may split, merge, reverse, or re-parameterize curves while creating a region, so matching is performed within the island and its holes rather than relying only on identical curve endpoints.</p>
+
+<h2>View Orientation</h2>
+<p>Loop containment is evaluated in the owning view's local <strong>Right/Up</strong> plane. This supports plan views as well as vertical views such as sections and elevations.</p>
+
+<h2>Keep or Delete Originals</h2>
+<table><tr><th>Option</th><th>Behavior</th></tr><tr><td><strong>Keep original regions</strong></td><td>Creates the exploded regions and leaves the selected source regions unchanged. Recommended when checking complex geometry.</td></tr><tr><td><strong>Delete original regions</strong></td><td>Creates the exploded regions and removes each successfully processed source region.</td></tr></table>
+
+<h2>Important Notes</h2>
+<ul><li>Works with <strong>Filled Regions</strong> and <strong>Masking Regions</strong>.</li><li>Filled Regions retain the exact source Filled Region type.</li><li>Masking Regions remain Masking Regions.</li><li>Multiple selected source regions are processed independently.</li><li>Disconnected solid areas become separate region elements.</li><li>Interior holes remain with the appropriate enclosing region.</li><li>Nested islands become independent regions.</li><li>Boundary line styles are restored where they can be matched reliably.</li><li>Touching or coincident boundaries can be geometrically ambiguous and should be reviewed.</li></ul>
+
+<h2>Recommended Workflow</h2>
+<p>For complex geometry, first use <strong>Keep original regions</strong>. Compare the exploded result with the source, especially nested islands, holes, and non-default boundary line styles. Once verified, delete the original manually or rerun using <strong>Delete original regions</strong>.</p>
+
+<div class="footer">Explode Regions &mdash; PyPiPie pyRevit Tools</div>
+</body></html>

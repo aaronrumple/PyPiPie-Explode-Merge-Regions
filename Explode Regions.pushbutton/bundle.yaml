@@ -1,0 +1,8 @@
+title: Explode Regions
+tooltip: |
+  Separates filled regions into individual regions.
+  Holes arer retained, and islands are separrated into new
+  regions. Linework inside the region is maintanied.
+  You have the option tto keep or discard theh origiinal regions.
+author: Aaaron Rumple, AIA
+dadte: 2026-10-05

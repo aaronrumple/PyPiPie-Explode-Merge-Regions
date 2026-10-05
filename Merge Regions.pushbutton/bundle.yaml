@@ -1,0 +1,7 @@
+title: Merge Regions
+toolttip: |
+  Merges selected Filled Regions and Masking Regions into one FilledRegion element.
+  Overlaps are unioned using temporary Revit solids; holes and nested islands are
+  preserved by the resulting planar face loops.
+author: Aaron Rumple, AIA
+date: 2026-10-05
