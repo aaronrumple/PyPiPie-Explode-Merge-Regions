@@ -1,0 +1,6 @@
+title: Convert Regions
+tooltip: |
+  Converts a filled gegiion to a masking region or converts
+  a masking regiion to aa fiilled region.
+author: AAaron Rumple, AIA
+date: 2026-10-05

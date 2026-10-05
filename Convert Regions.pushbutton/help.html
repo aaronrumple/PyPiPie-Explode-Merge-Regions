@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Convert Region - Help</title>
+<style>
+  :root{--bg:#f5f7fa;--card:#fff;--text:#20242a;--muted:#5d6673;--line:#d7dde5;--accent:#276ef1;--good:#1f8f4e;--warn:#b36b00;--mask:#eceff3;--fill:#cfe8ff}
+  *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font:15px/1.55 "Segoe UI",Arial,sans-serif}
+  .wrap{max-width:980px;margin:0 auto;padding:28px 24px 48px}.hero{background:linear-gradient(135deg,#1f2937,#374151);color:#fff;border-radius:14px;padding:28px 32px;margin-bottom:22px}
+  h1{margin:0 0 8px;font-size:30px}.hero p{margin:0;color:#dce3ec}.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px 24px;margin:16px 0;box-shadow:0 1px 2px rgba(0,0,0,.03)}
+  h2{font-size:21px;margin:0 0 12px}h3{font-size:17px;margin:20px 0 8px}.lead{font-size:16px}.steps{margin:8px 0 0 22px}.steps li{margin:7px 0}.note{border-left:4px solid var(--accent);background:#eef4ff;padding:12px 14px;border-radius:6px;margin:14px 0}.warn{border-left-color:#d08a00;background:#fff7e6}.good{border-left-color:var(--good);background:#edf9f1}
+  table{width:100%;border-collapse:collapse;margin-top:10px}th,td{border-bottom:1px solid var(--line);text-align:left;padding:10px 8px;vertical-align:top}th{background:#f7f9fb}
+  .diagram{border:1px solid var(--line);border-radius:10px;background:#fff;padding:12px;margin:12px 0 4px}.caption{color:var(--muted);font-size:13px;margin-top:6px}
+  code{background:#f0f2f5;border-radius:4px;padding:1px 5px}.small{font-size:13px;color:var(--muted)}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:700px){.two{grid-template-columns:1fr}.wrap{padding:16px}.hero{padding:22px}}
+  .legend span{display:inline-flex;align-items:center;margin-right:18px}.sw{width:22px;height:10px;border:1px solid #333;margin-right:6px}.fill{background:var(--fill)}.mask{background:var(--mask)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <h1>Convert Region</h1>
+    <p>Convert Revit Filled Regions to Masking Regions and Masking Regions to Filled Regions while preserving boundary geometry and mixed line styles.</p>
+  </section>
+
+  <section class="card">
+    <h2>What This Tool Does</h2>
+    <p class="lead">The tool converts selected detail regions in either direction:</p>
+    <table>
+      <tr><th>Selected element</th><th>Result</th><th>Additional input</th></tr>
+      <tr><td>Filled Region</td><td>Masking Region</td><td>None</td></tr>
+      <tr><td>Masking Region</td><td>Filled Region</td><td>Select the Filled Region type to use</td></tr>
+      <tr><td>Mixed selection</td><td>Each element converts to the opposite kind</td><td>Filled Region type is requested once for all Masking → Filled conversions</td></tr>
+    </table>
+    <div class="note good"><b>Mixed selections are supported.</b> A Filled Region and a Masking Region can be selected together; each converts independently to the opposite kind.</div>
+  </section>
+
+  <section class="card">
+    <h2>How to Use</h2>
+    <ol class="steps">
+      <li>Preselect one or more Filled Regions and/or Masking Regions, or run the tool and select them when prompted.</li>
+      <li>If the selection contains any Masking Regions, choose the Filled Region type to use for the Masking → Filled conversion.</li>
+      <li>The tool creates replacement regions, restores each boundary segment's line style, verifies the result, and then removes the originals.</li>
+      <li>The newly created regions remain selected, making it easy to run the tool again to reverse the conversion.</li>
+    </ol>
+  </section>
+
+  <section class="card">
+    <h2>Graphic Examples</h2>
+    <div class="legend"><span><i class="sw fill"></i>Filled Region</span><span><i class="sw mask"></i>Masking Region</span></div>
+
+    <h3>Filled Region → Masking Region</h3>
+    <div class="diagram">
+      <svg viewBox="0 0 820 190" width="100%" role="img" aria-label="Filled Region converts to Masking Region">
+        <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#276ef1"/></marker></defs>
+        <rect x="55" y="48" width="250" height="95" fill="#cfe8ff" stroke="#1f2937" stroke-width="4"/>
+        <text x="180" y="38" text-anchor="middle" font-family="Segoe UI,Arial" font-size="18">Filled Region</text>
+        <line x1="350" y1="96" x2="470" y2="96" stroke="#276ef1" stroke-width="4" marker-end="url(#arrow)"/>
+        <text x="410" y="80" text-anchor="middle" font-family="Segoe UI,Arial" font-size="15">Convert</text>
+        <rect x="515" y="48" width="250" height="95" fill="#eceff3" stroke="#1f2937" stroke-width="4"/>
+        <text x="640" y="38" text-anchor="middle" font-family="Segoe UI,Arial" font-size="18">Masking Region</text>
+      </svg>
+    </div>
+
+    <h3>Masking Region → Filled Region</h3>
+    <div class="diagram">
+      <svg viewBox="0 0 820 215" width="100%" role="img" aria-label="Masking Region converts to a selected Filled Region type">
+        <defs><marker id="arrow2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#276ef1"/></marker></defs>
+        <rect x="55" y="62" width="250" height="95" fill="#eceff3" stroke="#1f2937" stroke-width="4"/>
+        <text x="180" y="48" text-anchor="middle" font-family="Segoe UI,Arial" font-size="18">Masking Region</text>
+        <line x1="350" y1="110" x2="470" y2="110" stroke="#276ef1" stroke-width="4" marker-end="url(#arrow2)"/>
+        <text x="410" y="92" text-anchor="middle" font-family="Segoe UI,Arial" font-size="15">Choose type</text>
+        <rect x="515" y="62" width="250" height="95" fill="#cfe8ff" stroke="#1f2937" stroke-width="4"/>
+        <text x="640" y="48" text-anchor="middle" font-family="Segoe UI,Arial" font-size="18">Filled Region</text>
+        <text x="640" y="188" text-anchor="middle" font-family="Segoe UI,Arial" font-size="14" fill="#5d6673">Uses the selected Filled Region type</text>
+      </svg>
+    </div>
+
+    <h3>Mixed Selection</h3>
+    <div class="diagram">
+      <svg viewBox="0 0 900 260" width="100%" role="img" aria-label="Mixed selection converts independently">
+        <defs><marker id="arrow3" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#276ef1"/></marker></defs>
+        <text x="160" y="28" text-anchor="middle" font-family="Segoe UI,Arial" font-size="18">Selected</text>
+        <rect x="55" y="50" width="210" height="70" fill="#cfe8ff" stroke="#1f2937" stroke-width="3"/><text x="160" y="92" text-anchor="middle" font-family="Segoe UI,Arial" font-size="16">Filled Region</text>
+        <rect x="55" y="150" width="210" height="70" fill="#eceff3" stroke="#1f2937" stroke-width="3"/><text x="160" y="192" text-anchor="middle" font-family="Segoe UI,Arial" font-size="16">Masking Region</text>
+        <line x1="305" y1="85" x2="520" y2="85" stroke="#276ef1" stroke-width="4" marker-end="url(#arrow3)"/>
+        <line x1="305" y1="185" x2="520" y2="185" stroke="#276ef1" stroke-width="4" marker-end="url(#arrow3)"/>
+        <text x="410" y="70" text-anchor="middle" font-family="Segoe UI,Arial" font-size="14">Filled → Masking</text>
+        <text x="410" y="170" text-anchor="middle" font-family="Segoe UI,Arial" font-size="14">Masking → Filled</text>
+        <text x="660" y="28" text-anchor="middle" font-family="Segoe UI,Arial" font-size="18">Result</text>
+        <rect x="555" y="50" width="210" height="70" fill="#eceff3" stroke="#1f2937" stroke-width="3"/><text x="660" y="92" text-anchor="middle" font-family="Segoe UI,Arial" font-size="16">Masking Region</text>
+        <rect x="555" y="150" width="210" height="70" fill="#cfe8ff" stroke="#1f2937" stroke-width="3"/><text x="660" y="192" text-anchor="middle" font-family="Segoe UI,Arial" font-size="16">Filled Region</text>
+      </svg>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Mixed Boundary Line Styles</h2>
+    <p>Boundary segments can use different Revit line styles. The tool preserves those styles segment-by-segment instead of applying a single line style to the entire replacement region.</p>
+    <div class="diagram">
+      <svg viewBox="0 0 820 235" width="100%" role="img" aria-label="Mixed boundary line styles are preserved">
+        <rect x="250" y="48" width="320" height="130" fill="#f7f8fa" stroke="none"/>
+        <line x1="250" y1="48" x2="570" y2="48" stroke="#111" stroke-width="7"/>
+        <line x1="570" y1="48" x2="570" y2="178" stroke="#111" stroke-width="2" stroke-dasharray="12 8"/>
+        <line x1="570" y1="178" x2="250" y2="178" stroke="#111" stroke-width="3"/>
+        <line x1="250" y1="178" x2="250" y2="48" stroke="#111" stroke-width="1"/>
+        <text x="410" y="30" text-anchor="middle" font-family="Segoe UI,Arial" font-size="15">Heavy line</text>
+        <text x="610" y="115" font-family="Segoe UI,Arial" font-size="15">Dashed</text>
+        <text x="410" y="208" text-anchor="middle" font-family="Segoe UI,Arial" font-size="15">Medium line</text>
+        <text x="205" y="115" text-anchor="middle" font-family="Segoe UI,Arial" font-size="15">Thin line</text>
+      </svg>
+      <div class="caption">Each replacement boundary curve is matched back to the corresponding source boundary and receives its original line style.</div>
+    </div>
+    <div class="note">Because Revit caches region graphics, the tool commits the line-style edits and then performs a separate refresh step before verification.</div>
+  </section>
+
+  <section class="card">
+    <h2>Selection and Type Behavior</h2>
+    <div class="two">
+      <div>
+        <h3>Preselection</h3>
+        <p>If valid regions are already selected, the tool uses them immediately.</p>
+      </div>
+      <div>
+        <h3>No Preselection</h3>
+        <p>If no valid regions are selected, Revit prompts you to pick Filled or Masking Regions.</p>
+      </div>
+    </div>
+    <div class="note warn"><b>Filled Region Type dialog:</b> this dialog appears only when at least one selected source is an actual Masking Region. The chosen Filled Region type is applied only to Masking → Filled conversions.</div>
+  </section>
+
+  <section class="card">
+    <h2>Safety and Verification</h2>
+    <p>The conversion is performed as a transaction group. Before the original regions are deleted, the tool verifies the replacement geometry and boundary styles.</p>
+    <ul>
+      <li>If the boundary segment count changes, the conversion is rejected.</li>
+      <li>If a source boundary cannot be matched to a replacement boundary, the conversion is rejected.</li>
+      <li>If an original line style cannot be restored, the conversion is rejected.</li>
+      <li>If the operation fails, the transaction group rolls back rather than leaving a partially converted set.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Output</h2>
+    <p>The pyRevit output window reports the selected counts, conversion counts, failures, direction of each conversion, original ElementId, and the new clickable ElementId.</p>
+    <pre style="background:#111827;color:#e5e7eb;padding:14px;border-radius:8px;overflow:auto"># Convert Region
+Selected: 2 (Filled: 1, Masking: 1)
+Converted: 2
+Failed: 0
+
+Filled -&gt; Masking   10613037 -&gt; 10614566
+Masking -&gt; Filled   10613892 -&gt; 10614573</pre>
+  </section>
+
+  <section class="card">
+    <h2>Notes</h2>
+    <ul>
+      <li>The tool operates on Revit <b>FilledRegion</b> elements, including actual Masking Region instances.</li>
+      <li>The element kind is determined from <code>FilledRegion.IsMasking</code>.</li>
+      <li>A Filled Region type's own masking/opaque display setting is not used to decide whether the element is a Masking Region.</li>
+      <li>Pinned state is retained when Revit permits it.</li>
+    </ul>
+    <p class="small">Help file prepared for Convert Region v14.</p>
+  </section>
+</div>
+</body>
+</html>
